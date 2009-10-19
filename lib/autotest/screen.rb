@@ -16,7 +16,7 @@ require 'autotest'
 class Autotest::Screen
   VERSION = '4.0.1'
 
-  DEFAULT_STATUSLINE = '%H %`%-w%{=b bw}%n %t%{-}%+w'
+  DEFAULT_STATUSLINE = '%99`%{= kw} %100`%112`%= %102`%101`%114`%115`%108`%113`%119`%117`%118`%116`%106`%104`%103`%105`%107`%Y-%m-%d %0c:%s'
   DEFAULT_SCREEN_CMD = 'screen'
 
   SCREEN_COLOR = {
@@ -52,7 +52,7 @@ class Autotest::Screen
   def self.screen_cmd=(a); @screen_cmd = a; end
 
   def self.send_cmd(msg)
-    cmd = %(#{screen_cmd} -X eval 'hardstatus alwayslastline "#{(statusline + msg).gsub('"', '\"')}"') #' stupid ruby-mode
+    cmd = %(#{screen_cmd} -X eval 'hardstatus alwayslastline "#{(msg + statusline).gsub('"', '\"')}"') #' stupid ruby-mode
     system cmd
     nil
   end
