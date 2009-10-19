@@ -94,30 +94,14 @@ class Autotest::Screen
   Autotest.add_hook :ran_command do |at|
     next false unless execute?
     next false if at.results.empty?
+    
+    results = at.results.join
+    failures_count = results.scan(at.failed_results_re).length
 
-    output = at.results.join
-
-    case at.class.name
-    when 'Autotest::Rails'
-      results = output.scan(/(\d+)\s*failures?,\s*(\d+)\s*errors?/).first
-      num_failures, num_errors = results.map{|r| r.to_i}
-
-      if num_failures > 0 || num_errors > 0
-        @last_message = {:message => "Red F:#{num_failures} E:#{num_errors}", :color => :red}
-      else
-        @last_message = {:message => 'All Green', :color => :green}
-      end
-    when 'Autotest::RailsRspec', 'Autotest::MerbRspec'
-      results = output.scan(/(\d+)\s*examples?,\s*(\d+)\s*failures?(?:,\s*(\d+)\s*pendings?)?/).first
-      num_examples, num_failures, num_pendings = results.map{|r| r.to_i}
-
-      if num_failures > 0
-        @last_message = {:message => "Fail F:#{num_failures} P:#{num_pendings}", :color => :red}
-      elsif num_pendings > 0
-        @last_message = {:message => "Pend F:#{num_failures} P:#{num_pendings}", :color => :yellow}
-      else
-        @last_message = {:message => 'All Green', :color => :green}
-      end
+    if failures_count > 0
+      @last_message = {:message => "Red F:#{failures_count}", :color => :red}
+    else
+      @last_message = {:message => 'All Green', :color => :green}
     end
     next false
   end
