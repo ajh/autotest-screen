@@ -93,6 +93,7 @@ class Autotest::Screen
 
   Autotest.add_hook :ran_command do |at|
     next false unless execute?
+    next false if at.results.empty?
 
     output = at.results.join
 
