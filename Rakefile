@@ -1,12 +1,16 @@
-# -*- ruby -*-
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gem|
+    gem.name = "ajh-autotest-screen"
+    gem.summary = "autotest status for gnu screen"
+    gem.description = "Autotest::Screen shows autotest/autospec progress on GNU Screen's status line."
+    gem.email = "hartforda@gmail.com"
+    gem.homepage = "http://github.com/ajh/autotest-screen"
+    gem.authors = ["Andrew Hartford", "Mikami Yoshiyuki"]
 
-require 'rubygems'
-require 'hoe'
-require './lib/autotest/screen.rb'
-
-Hoe.new('autotest_screen', Autotest::Screen::VERSION) do |p|
-  p.rubyforge_name = 'autotest-screen'
-  p.developer('MIKAMI Yoshiyuki', 'yoshuki@saikyoline.jp')
+    gem.add_dependency 'ZenTest'
+  end
+  Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end
-
-# vim: syntax=Ruby
